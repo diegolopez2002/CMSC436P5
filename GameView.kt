@@ -88,10 +88,11 @@ class GameView(context: Context, attrs: AttributeSet? = null) : View(context, at
     }
 
     private fun startGame() {
-        timer = Timer()
-        gameTimerTask = GameTimerTask(this, model)
-        timer?.schedule(gameTimerTask, 0, 16)  // roughly 60 fps
-    }
+    timer = Timer()
+    // Instantiate without passing the model.
+    gameTimerTask = GameTimerTask(this)
+    timer?.schedule(gameTimerTask, 0, 16) 
+}
 
     // Called by the GameTimerTask on every tick
     fun update() {
