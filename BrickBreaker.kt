@@ -11,17 +11,17 @@ class BrickBreaker {
     // List of bricks in the game.
     var bricks: MutableList<Brick> = mutableListOf()
 
-    // Ball properties
+    // Ball properties.
     var ballX: Float = 0f
     var ballY: Float = 0f
     var ballRadius: Float = 20f
-    var ballSpeedX: Float = 8f
-    var ballSpeedY: Float = 8f
+    private var ballSpeedX: Float = 8f
+    private var ballSpeedY: Float = 8f
 
     // Paddle represented as a rectangle.
     var paddleRect: RectF = RectF()
 
-    // Game state
+    // Game state.
     var gameOver: Boolean = false
     var score: Int = 0
     var newBest: Boolean = false
@@ -30,7 +30,7 @@ class BrickBreaker {
     var paddleHit: Boolean = false
 
     // Initializes bricks based on the current screen width.
-    fun initializeBricks(screenWidth: Int) {
+    private fun initializeBricks(screenWidth: Int) {
         bricks.clear()
         val rows = 4
         val cols = 6
@@ -39,17 +39,18 @@ class BrickBreaker {
         for (row in 0 until rows) {
             for (col in 0 until cols) {
                 val left = col * brickWidth
-                val top = row * brickHeight + 50  // margin from the top
-                val right = left + brickWidth - 5  // slight gap between bricks
+                val top = row * brickHeight + 50  // margin from the top.
+                val right = left + brickWidth - 5   // slight gap between bricks.
                 val bottom = top + brickHeight - 5
+                // Each brick is given a random color.
                 val color = Color.rgb(Random.nextInt(256), Random.nextInt(256), Random.nextInt(256))
                 bricks.add(Brick(RectF(left, top, right, bottom), color))
             }
         }
     }
 
-    // Initializes ball and paddle positions.
-    fun initializeBallAndPaddle(screenWidth: Int, screenHeight: Int) {
+    // Initializes the ball at the center of the screen and the paddle at the bottom.
+    private fun initializeBallAndPaddle(screenWidth: Int, screenHeight: Int) {
         // Place ball at center of screen.
         ballX = screenWidth / 2f
         ballY = screenHeight / 2f
@@ -62,7 +63,7 @@ class BrickBreaker {
         paddleRect = RectF(left, top, left + paddleWidth, top + paddleHeight)
     }
 
-    // Update the game state: move the ball, check for collisions, and update the score.
+    // Updates the game state: moves the ball, checks for collisions, and updates the score.
     fun update(screenWidth: Int, screenHeight: Int) {
         // Do initial setup if necessary.
         if (bricks.isEmpty()) {
@@ -102,7 +103,7 @@ class BrickBreaker {
         }
     }
 
-    // Move the paddle so that its center is at the given x-coordinate.
+    // Moves the paddle so that its center is at the given x-coordinate.
     fun movePaddle(x: Float, screenWidth: Int) {
         val paddleWidth = paddleRect.width()
         var newLeft = x - paddleWidth / 2
